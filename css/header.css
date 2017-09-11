@@ -1,0 +1,124 @@
+			#box1{
+				width: 100%;
+				height: 185px;
+				margin-bottom: 40px;
+			}
+			#box1 .headerTopArea{
+				width: 100%;
+				height: 31px;
+				background-color: #F7F7F7;
+			}
+			#box1 .headerTopArea .headerTop{
+				margin: auto;
+				width: 1200px;
+				height: 31px;
+			}
+			#box1 .headerTopArea .headerTop .headerTopword{
+				min-width: 240px;
+				height: 31px;
+				float: right;
+				display: block;
+				line-height: 31px;
+				color: #808080;
+				font-size: 12px;
+			}
+			#box1 .headerTopArea .headerTop .headerTopword a{
+				color: #808080;
+				font-size: 12px;
+			}
+			#box1 .logoArea{
+				width: 1200px;
+				height: 62px;
+				margin: 20px auto 25px;
+				
+			}
+			.vanclLogoSearch{
+				width: 438px;
+				padding-top: 8px;
+				float: right;
+				
+			}
+			.searchTab{
+				height: 29px;
+			}
+			.search-fl{
+				position: relative;
+				float: left;
+			}
+			.Enter{
+				width: 249px;
+				height: 26px;
+				line-height: 26px;
+				padding: 0 53px 0 5px;
+				border: 1px solid #c9caca;
+			}
+			.btn{
+				position: absolute;
+				right: -1px;
+				top: 0px;
+				width: 49px;
+				height: 27px;
+				border: none;
+				cursor: pointer;
+				background: url(../img/vanclsprite.png) no-repeat  -100px 0;	
+			}
+			.active{
+				width: 105px;
+				height: 27px;
+				border: 1px solid #c1383e;
+				background: url(../img/vanclsprite.png) no-repeat  -154px 0;
+				position: relative;
+				float: right;
+			}
+			.cartTab{
+				color: #FFFFFF;
+				padding-left: 29px;
+				padding-top: 6px;
+				font-size: 12px;
+				line-height: 27px;
+			}
+			.active:hover{
+				background: url(../img/vanclsprite.png) no-repeat  -154px -30px;
+				color: #c1383e;
+			}
+			.cartTab:hover{
+				color: #c1383e;
+			}
+			.hotWord{
+				width: 440px;
+				padding-top: 5px;
+				line-height: 18px;
+				padding-left: 15px;
+				color: #727171;
+			}
+			.hotWord a{
+				color: #727171;
+				margin: 0 5px 0;
+			}
+			#box1 .product-list{
+				margin: auto;
+				width: 1200px;
+				height: 46px;
+				background: url(../img/logo_new.jpg) no-repeat;
+			}
+			#cat{
+				margin-left: 191px;
+				padding-top: 22px;
+			}
+			.list{
+		      float: left;
+		      width: 99px;
+		      height: 16px;
+		      text-align: center;
+		      list-style: none;
+		      line-height: 16px;
+		      border-right: 1px solid #888;
+		    }
+		    .list a{
+		    	color: #888;
+		    	font-size: 16px;
+		    }
+		    .list a:hover{
+		    	color: #B92315;
+		    }
+	

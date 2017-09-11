@@ -1,0 +1,103 @@
+#box2 {
+	width: 100%;
+}
+
+.goods-look {
+	margin: auto;
+	margin-top: 40px;
+	width: 1200px;
+	height: 1000px;
+}
+
+#list2 {
+	float: left;
+	width: 200px;
+	height: 300px;
+	margin: 0 20px 0 20px;
+	overflow: hidden;
+}
+
+li a {
+	color: black;
+	font-size: 15px;
+}
+
+li img {
+	width: 100%;
+}
+
+#box2 .vanclFocus {
+	position: relative;
+	width: 1200px;
+	height: 535px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.m_unit {
+	width: 6000px;
+	height: 535px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.m_unit ul li {
+	float: left;
+	width: 1200px;
+	height: 535px;
+}
+
+.btns .leftBtn {
+	position: absolute;
+	width: 28px;
+	height: 60px;
+	cursor: pointer;
+	left: 10px;
+	top: 230px;
+	background: url(../img/focus_lr0918.png) no-repeat 0 0;
+}
+
+.leftBtn:hover {
+	background-position: 0 -60px;
+}
+
+.btns .rightBtn {
+	position: absolute;
+	width: 28px;
+	height: 60px;
+	cursor: pointer;
+	right: 10px;
+	top: 230px;
+	background: url(../img/focus_lr0918.png) no-repeat -52px 0;
+}
+
+.rightBtn:hover {
+	background-position: -52px -60px;
+}
+
+.circles {
+	position: absolute;
+	width: 80px;
+	height: 12px;
+	bottom: 25px;
+	right: 46%;
+}
+
+.circles ol {
+	list-style: none;
+}
+
+.circles ol li {
+	float: left;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	cursor: pointer;
+	background-color: #dddddd;
+	margin-right: 6px;
+}
+
+.circles ol li.current {
+	background-color: darkred;
+}

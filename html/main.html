@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="utf-8" />
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/index.css"/>
-		<link rel="stylesheet" type="text/css" href="css/header.css"/>
-		<link rel="stylesheet" type="text/css" href="css/base.css"/>
-		<link rel="stylesheet" type="text/css" href="css/section.css"/>
-		<script src="js/myajax.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/header.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/section.css"/>
+		<script src="../js/myajax.js"></script>
+		<script src="../js/animate.js"></script>
+		
 	</head>
 	<body>
 		<header id="box1">
@@ -55,7 +57,33 @@
 				<ul id="cat"></ul>
 			</div>
 		</header>
-		<section></section>
+		<section id="box2">
+			<div class="vanclFocus">
+				<div class="m_unit">
+					<ul>
+				        <li><a href=""><img src="../img/sjxb.jpg" alt=""></a></li>
+				        <li><a href=""><img src="../img/xzjsj.jpg" alt=""></a></li>
+				        <li><a href=""><img src="../img/535.jpg" alt=""></a></li>
+				        <li><a href=""><img src="../img/sjqjxp.jpg" alt=""></a></li>
+				    </ul>
+				</div>
+				<div class="btns">
+					<a href="javascript:" class="leftBtn"></a>
+					<a href="javascript:" class="rightBtn"></a>
+				</div>
+				<div class="circles">
+					<ol>
+				        <li class="current"></li>
+				        <li></li>
+				        <li></li>
+				        <li></li>
+				    </ol>
+				</div>
+			</div>
+			<div class="goods-look">
+				<ul id="goods"></ul>
+			</div>
+		</section>
 		<footer id="box3">
 			<p class="fonts">
 				Copyright 2007 - 2016 vancl.com All Rights Reserved 京ICP证100557号 京公网安备11010102000579号 出版物经营许可证新出发京批字第直110138号
@@ -70,5 +98,20 @@
 			</div>
 		</footer>
 	</body>
-	<script src="js/gongneng.js"></script>
+	<script src="../js/gongneng.js"></script> 
+		<script>
+			var oUl = document.getElementById("goods");
+		myajax.get("http://h6.duchengjiu.top/shop/api_goods.php",{},function(err,responseText){
+			var json = JSON.parse(responseText);
+			var data = json.data;
+			for (var i = 0; i < data.length; i++) {
+				var obj = data[i];
+				oUl.innerHTML += `<li id="list2"><a href="goods.html?goods_id=${obj.goods_id}">
+				<div><img src="${obj.goods_thumb}" /></div>
+				<div>${obj.goods_name}</div>
+				<div>￥ ${obj.price}</div></a>
+				</li>`;
+			}
+		});		
+		</script>
 </html>

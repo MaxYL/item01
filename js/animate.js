@@ -1,19 +1,5 @@
-/**
-支持传递一个json对象来修改一个元素的多个属性
-回调函数的内部this值是调用函数时的第一个参数
-缓冲功能
-*/
-/**
-* 文档注释，@param表示参数的意思
-* @param elem是运动对象
-* @param targetJSON参数是运动的终点状态，可以写px, 也可以不写
-* @param time运动总时间，毫秒为单位
-* @param tweenString 缓冲描述词，比如："Linear", 可选
-* @param callback 回调函数，可选
-*/
-function animate(elem, targetJSON, time, tweenString, callback) {
-  //函数重载，用户传进来的参数数量，类型可能不一样
-  //检查数量和类型
+
+function animate(elem, targetJSON, time, tweenString, callback) {	
   if (
     arguments.length < 3
     || typeof arguments[0] != "object"
@@ -22,15 +8,12 @@ function animate(elem, targetJSON, time, tweenString, callback) {
   ) {
     throw new Error('对不起，你传进来的参数数量不对或者参数类型不对，请仔细检查');
   } else if (arguments.length === 3) {
-    //用户只传进来3个参数，表示tweenString、callback被省略了，那么我们默认使用Linear当做缓冲描述词
+ 
     tweenString = 'Linear';
-    //默认回调函数是null
     callback = null;
   } else if (arguments.length === 4) {
-    //用户只传进来4个参数，第4个参数可能传进来的是tweenString, 也可能是callback
     switch (typeof arguments[3]) {
       case "string":
-        //用户传进来的是缓冲描述词，所以就把callback设置补为null
         callback = null;
         break;
       case "function":
@@ -41,56 +24,30 @@ function animate(elem, targetJSON, time, tweenString, callback) {
         throw new Error('第4个参数要么是缓冲描述词，要么是回调函数，请检查');
     }
   }
-
-  //检查缓冲字符串是否在缓冲对象中
-  //拦截器，就是在程序未开始执行之前先判断不合法时就退出; 和表单验证类似
-  if (!Tween[tweenString]) {
-    throw new Error('缓冲字符串不合法，请检查');
+  if(!Tween[tweenString]){
+  	throw new Error('缓冲参数错误');
   }
 
-  //动画间隔要根据不同浏览器来设置：
   if (navigator.userAgent.indexOf("MSIE") != -1) {
     var interval = 50;
   } else {
     var interval = 20;
   }
-
-  //初始状态，也表示信号量
   var originalJSON = {};
   //变化量对象
   var deltaJSON = {};
-  //给信号量对象添加，添加什么属性，目标对象中有什么属性，这里就添加什么属性
-  //值就是当前的计算样式
   for (var k in targetJSON) {
-    //初始json
     originalJSON[k] = parseFloat(fetchComputedStyle(elem, k));
-    //把每个targetJSON中的值都去掉px
     targetJSON[k] = parseFloat(targetJSON[k]);
-    //变化量JSON
     deltaJSON[k] = targetJSON[k] - originalJSON[k];
   }
-
-  //至此，我们得到三个JSON
-  // originalJSON  初始状态集合，这个JSON永远不变
-  // targetJSON 目标状态集合，这个JSON永远不变
-  // deltaJSON 差集集合，这个JSON永远不变
-
-  //总帧数
   var frames = time / interval;
-  //当前帧
   var frame = 0;
-  //当前的值
   var v;
-  //当前动画正在执行
-  elem.isAnimated = true;
-  //定时器
+  elem.isAnimated=true;
   var timer = setInterval(function(){
-    //要让所有的属性发生变化
     for (var k in originalJSON) {
-      //动：
-      //v就表示这一帧应该在的位置：
       v = Tween[tweenString](frame, originalJSON[k], deltaJSON[k], frames);
-      //根据是不是opacity来设置单位
       if (k != "opacity") {
         elem.style[k] = v + 'px';
       } else {
@@ -101,19 +58,8 @@ function animate(elem, targetJSON, time, tweenString, callback) {
 
     frame++;
     if (frame >= frames) {
-      //次数够了，停止定时器
-      //强行让elem跑到targetJSON那个位置
-      for (var k in targetJSON) {
-        if (k != "opacity") {
-          elem.style[k] = targetJSON[k] + 'px';
-        } else {
-          elem.style[k] = targetJSON[k];
-          elem.style.filter = "alpha(opacity=" + (targetJSON[k]*100) + ")";
-        }
-      }
       clearInterval(timer);
-      elem.isAnimated = false;
-      //回调函数
+      elem.isAnimated=false;
       callback && callback.apply(elem);
     }
   }, interval);
@@ -124,7 +70,7 @@ function fetchComputedStyle(obj, property) {
     property = property.replace(/[A-Z]/g, function(match){
       return '-' + match.toLowerCase();
     });
-    return window.getComputedStyle(obj)[property]; //中括号里面可以是变量
+    return window.getComputedStyle(obj)[property]; 
   } else {
     property = property.replace(/-([a-z])/g, function(match, $1){
       return $1.toUpperCase();
@@ -133,26 +79,6 @@ function fetchComputedStyle(obj, property) {
   }
 }
 
-/*
- * Linear：线性匀速运动效果；
- * Quadratic：二次方的缓动（t^2）；
- * Cubic：三次方的缓动（t^3）；
- * Quartic：四次方的缓动（t^4）；
- * Quintic：五次方的缓动（t^5）；
- * Sinusoidal：正弦曲线的缓动（sin(t)）；
- * Exponential：指数曲线的缓动（2^t）；
- * Circular：圆形曲线的缓动（sqrt(1-t^2)）；
- * Elastic：指数衰减的正弦曲线缓动；
- * Back：超过范围的三次方缓动（(s+1)*t^3 – s*t^2）；
- * Bounce：指数衰减的反弹缓动。
- *
- */
-/*
- * easeIn：从0开始加速的缓动，也就是先慢后快；
- * easeOut：减速到0的缓动，也就是先快后慢；
- * easeInOut：前半段从0开始加速，后半段减速到0的缓动。
- *
- */
 var Tween = {
 	Linear: function(t,b,c,d){ return c*t/d + b; },
 	QuadEaseIn: function(t,b,c,d){
@@ -275,5 +201,28 @@ var Tween = {
 	BounceEaseInOut: function(t,b,c,d){
 		if (t < d/2) return Tween.BounceEaseIn(t*2, 0, c, d) * .5 + b;
 		else return Tween.BounceEaseOut(t*2-d, 0, c, d) * .5 + c*.5 + b;
+	}
+}
+
+function addEvent(obj,eventType,fn){
+	if(obj.addEventListener){
+		obj.addEventListener(obj,eventType,fn);
+	}else if(obj.attachEvent){
+		obj.attachEvent("on" + eventtype, function(){
+              fn.call(obj);
+        	});
+	}else{
+		obj['on'+eventType]=fn;
+	}
+}
+
+function removeEvent(obj,eventType,fn){
+	if(obj.removeListener){
+		obj.removeEventListener(eventType,fn);
+	}else if(obj.detachEvent){
+		var cli=fn(obj);
+		obj.detachEvent('on'+eventType,cli);
+	}else{
+		obj['on'+eventType]=null;
 	}
 }

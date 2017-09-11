@@ -1,0 +1,88 @@
+#rl-box1{
+				width: 1202px;
+				height: 69px;
+				border-bottom: 1px solid #919191;
+				margin: auto;
+				
+			}
+			#rl-box1 .logo{	
+				float: left;
+				width: 300px;
+				height: 69px;
+				background: url(../img/logo_new.jpg) no-repeat;
+				background-size: 189px 49px;
+				margin-top: 10px;
+			}
+			#rl-box2{
+				width: 100%;
+				height: 600px;
+			}
+			#rl-box2 .p-lo{
+				margin-top: 100px;
+				margin-left: -170px;
+				float: left;
+				width: 465px;
+				height: 350px;
+				background: url(../img/login120412_newlogo.jpg);
+				background-size: 465px 350px;
+			}
+			#rl-box2 .r-table{
+				margin-top: 119px;
+				margin-left: 20px;
+				float: left;
+				width: 427px;
+				height: 274px;
+			}
+			#rl-box2 .r-table .r1{
+				width: 420px;
+				height: 30px;
+				border-bottom: 1px solid red;
+				font-size: 20px;
+				color: #A2A2A2;
+			}
+			#rl-box2 .r-table .r1 label{
+				margin-left: 150px;
+				font-size: 15px;
+				color: black;
+			}
+			#rl-box2 .r-table .r1 a{
+				font-size: 18px;
+				color: #B52024;
+			}
+			#rl-box2 .r-table label{
+				width: 70px;
+				font-size: 20px;
+			}
+			#rl-box2 .r-table .insize{
+				width: 330px;
+				height: 50px;
+			}
+			#rl-box2 .r-table .insize .text{
+				width: 330px;
+				height: 48px;
+				font-size: 20px;
+				border: 1px solid rgba(0,0,0,0.5);
+				margin-top: 20px;
+				margin-bottom: 10px;
+			}
+			#rl-box2 .r-table .insize .text:hover{
+				border: 1px solid #abcdef ;
+			}
+			#rl-box2 .r-table .btnss{
+				width: 420px;
+				height: 50px;
+				background-color: red;
+				font-size: 20px;
+				color: white;
+				margin-top: 10px;
+			}
+			 .hint{
+			 		
+			      display: none;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+			    }
+			    .right {
+			      color: green;
+			    }
+			    .error {
+			      color: red;
+			    }
