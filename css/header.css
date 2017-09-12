@@ -27,15 +27,17 @@
 				font-size: 12px;
 			}
 			#box1 .logoArea{
-				width: 1200px;
+				width: 100%;
 				height: 62px;
-				margin: 20px auto 25px;
+				background: #fff;
+				z-index: 10;
 				
 			}
 			.vanclLogoSearch{
 				width: 438px;
 				padding-top: 8px;
 				float: right;
+				margin-right: 70px;
 				
 			}
 			.searchTab{
@@ -63,7 +65,7 @@
 				background: url(../img/vanclsprite.png) no-repeat  -100px 0;	
 			}
 			.active{
-				width: 105px;
+				width: 90px;
 				height: 27px;
 				border: 1px solid #c1383e;
 				background: url(../img/vanclsprite.png) no-repeat  -154px 0;
@@ -72,9 +74,10 @@
 			}
 			.cartTab{
 				color: #FFFFFF;
-				padding-left: 29px;
-				padding-top: 6px;
-				font-size: 12px;
+				display: inline-block;
+				width: 90px;
+				height: 27px;
+				text-align: center;
 				line-height: 27px;
 			}
 			.active:hover{

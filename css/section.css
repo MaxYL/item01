@@ -18,16 +18,19 @@
 	margin: 0 20px 0 20px;
 	overflow: hidden;
 }
-#list2:hover{
+
+#list2:hover {
 	opacity: .8;
 	padding: 0;
 	border: 1px solid orange;
 }
-#price{
+
+#price {
 	position: absolute;
 	bottom: 10px;
 	color: red;
 }
+
 li a {
 	color: black;
 	font-size: 15px;
@@ -111,4 +114,104 @@ li img {
 
 .circles ol li.current {
 	background-color: darkred;
+}
+
+form {
+	padding-right: 150px;
+}
+
+label {
+	display: block;
+	text-align: right;
+	margin-bottom: 5px;
+}
+
+.address-ul {
+	overflow: hidden;
+	height: 200px;
+}
+
+.address-ul li {
+	margin-top: 10px;
+	width: 200px;
+	height: 200px;
+	float: left;
+	overflow: hidden;
+	border: 1px solid #e4e4e4;
+	padding: 5px;
+	background-color: #ccc;
+	line-height: 200%;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.address-ul li.selected {
+	border: 1px solid orange;
+}
+
+.delete {
+	float: right;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 5px;
+	background-color: orange;
+	color: white;
+	cursor: pointer;
+}
+
+.delete:hover {
+	background-color: white;
+	color: orange;
+}
+
+.show-all-address {
+	clear: both;
+	width: 100px;
+	text-align: center;
+	margin-top: 10px;
+	margin-left: 30px;
+	padding: 5px;
+	cursor: pointer;
+	background-color: orange;
+	color: white;
+}
+
+.show-all-address:hover {
+	background-color: white;
+	color: orange;
+}
+
+#order {
+	margin-top: 20px;
+	margin-left: 30px;
+	width: 100px;
+	height: 30px;
+	cursor: pointer;
+	line-height: 30px;
+	text-align: center;
+	border: 1px solid #ccc;
+	border-radius: 10%;
+	box-shadow: 1px 1px 1px #ccc;
+	background: honeydew;
+	color: black;
+}
+
+#address {
+	margin: auto;
+	width: 1200px;
+}
+
+#address-size {
+	width: 1200px;
+	border-bottom: 1px solid black;
+	font-size: 18px;
+	padding: 5px;
+}
+
+#add-address {
+	margin-top: 10px;
+	float: right;
+	width: 200px;
+	height: 200px;
+	margin-right: 750px;
 }

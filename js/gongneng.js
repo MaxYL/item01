@@ -4,7 +4,7 @@ var oCat = document.getElementById("cat");
 				var data = json.data;
 				for (var i = 0; i < data.length; i++) {
 					var obj = data[i];
-					oCat.innerHTML += `<li class="list"><a href="goods.html?cat_id=${obj.cat_id}">${obj.cat_name}</a></li>`
+					oCat.innerHTML += `<li class="list"><a href="list.html?cat_id=${obj.cat_id}">${obj.cat_name}</a></li>`
 				}
 			});
 

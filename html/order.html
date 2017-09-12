@@ -3,11 +3,16 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/index.css"/>
-		<link rel="stylesheet" type="text/css" href="css/header.css"/>
-		<link rel="stylesheet" type="text/css" href="css/base.css"/>
-		<link rel="stylesheet" type="text/css" href="css/section.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/header.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/footer.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/section.css"/>
 		<script src="js/myajax.js"></script>
+		<style type="text/css">
+			#box1{
+				height: 500px;
+			}
+		</style>
 	</head>
 	<body>
 		<header id="box1">
@@ -15,9 +20,31 @@
 				<div class="headerTop">
 					<div class="headerTopword">
 						您好，欢迎光临凡客超品！
-						<a href="login.html">&nbsp;登录</a>
-						&nbsp;|&nbsp;
-						<a href="register.html">注册</a>
+						<a href="login.html"class="login">&nbsp;登录&nbsp;|&nbsp;</a>
+						
+						<a href="register.html"class="register">注册&nbsp;|&nbsp;</a>
+					
+						<a href="order.html"class="order">我的订单&nbsp;|&nbsp;</a>
+					    <a href="#" name="username" class="username">asdfghjkl1</a>
+    <!-- 可以在a链接里面写javascript代码，在href属性中以javascript:开头，后面写js代码 -->
+					    <a href="javascript:localStorage.clear(); location.reload();" class="logout">退出</a>
+					    <script>
+					      //判断用户名如果存在, 则显示用户名并显示退出按钮, 否则显示注册和登录
+					      if (localStorage.username) {
+					        var oUsername = document.querySelector('a[name=username]');
+					        var oLogout = document.querySelector('.logout');
+					        var oOrder = document.querySelector('.order');
+					        oUsername.innerText = localStorage.username;
+					        oUsername.style.display = 'inline';
+					        oOrder.style.display = 'inline';
+					        oLogout.style.display = 'inline';
+					      } else {
+					        var oRegister = document.querySelector('.register');
+					        var oLogin = document.querySelector('.login');
+					        oRegister.style.display = 'inline';
+					        oLogin.style.display = 'inline';
+					      }
+					    </script>
 					</div>
 				</div>
 			</div>
@@ -25,13 +52,26 @@
 				<div class="vanclLogoSearch">
 					<div class="searchTab">
 						<div class="search-fl">
-							<input type="text" placeholder="请输入关键字" class="Enter"/>
+							<input type="text" placeholder="请输入关键字" class="Enter"id='search'/>
 							<input type="button" class="btn"  />
 						</div>
+						<script>
+					      var oSearch = document.querySelector("#search");
+					      var oBtn = document.querySelector(".btn");
+					      oSearch.onkeyup = function(event) {
+					        if (oSearch.value!=''&&event.keyCode === 13) {
+					          location.href = 'search.html?search_text='+this.value;
+					        }
+					      }
+					      oBtn.onclick = function() {
+					      	if(oSearch.value!='')
+					      	location.href = 'search.html?search_text='+oSearch.value;
+					      }
+					    </script>
 						<div class="active">
 							<p>
 								<a  href="cart.html" class="cartTab">
-									购物车(<span>0</span>)
+									购物车
 								</a>
 							</p>
 						</div>
@@ -39,23 +79,99 @@
 					<div class="hotWord">
 						<p>
 							热门搜索：
-							<a href="#">T恤</a>
-							<a href="#">免烫衬衫</a>
-							<a href="#">C9</a>
-							<a href="#">熊本熊</a>
-							<a href="#">POLO</a>
-							<a href="#">牛津纺</a>
-							<a href="#">针织纺</a>
-							<a href="#">袜品</a>
+							<a href="search.html?search_text=T恤">T恤</a>
+							<a href="search.html?search_text=免烫衬衫">免烫衬衫</a>
+							<a href="search.html?search_text=C9">C9</a>
+							<a href="search.html?search_text=熊本熊">熊本熊</a>
+							<a href="search.html?search_text=POLO">POLO</a>
+							<a href="search.html?search_text=牛津纺">牛津纺</a>
+							<a href="search.html?search_text=针织纺">针织纺</a>
+							<a href="search.html?search_text=袜品">袜品</a>
 						</p>
 					</div>	
 				</div>
 			</div>
+			<script type="text/javascript">
+				var  oDiv = document.querySelector(".logoArea");
+				var  divT = oDiv.offsetHeight;
+				window.onscroll = function () {
+					var scrollT = document.documentElement.scrollTop || document.body.scrollTop;
+				    if (scrollT >= divT) {
+				     if (window.navigator.userAgent.indexOf('MSIE 6.0') != -1) {
+				      oDiv.style.position = 'absolute';
+				      oDiv.style.top = scrollT + 'px';
+				      oDiv.style.left = 0 + 'px';
+				     } else { 
+				      oDiv.style.position = 'fixed';
+				      oDiv.style.top = 0;
+				      oDiv.style.left = 0;
+				     }
+				    } else
+				     oDiv.style.position = '';
+				   }
+			</script>
 			<div class="product-list">
 				<ul id="cat"></ul>
 			</div>
 		</header>
-		<section></section>
+			 <main>
+			    <ul id="order">
+			
+			    </ul>
+			 </main>
+			<script>
+		    var oOrder = document.querySelector('#order');
+		    myajax.get('http://h6.duchengjiu.top/shop/api_order.php', {token: localStorage.token}, function(err, responseText){
+		      var json = JSON.parse(responseText);
+		      console.log(json);
+		      var data = json.data;
+		      if (data.length === 0) {
+		        oOrder.innerHTML = "<h3>您的订单为空</h3>";
+		        return;
+		      }
+		      for (var i = 0; i < data.length; i++) {
+		        var obj = data[i];
+		        //遍历商品列表，拼装HTML
+		        var goodsHTML = '';
+		        for (var j = 0; j < obj.goods_list.length; j++) {
+		          var goods = obj.goods_list[j];
+		          goodsHTML += `
+		            <div>
+		              ${goods.goods_name}
+		              <img src="${goods.goods_thumb}">
+		              单价：${goods.goods_price}
+					      数量：${goods.goods_number}
+					      小计：${goods.goods_price * goods.goods_number}
+				    </div>
+		          `;
+		        }
+        //一件商品的总价
+		        oOrder.innerHTML += `
+                  <li>
+                    <div class="title">收货人：${obj.consignee} 总价:${obj.total_prices} <span data-id="${obj.order_id}" class="cancel-order">取消订单</span></div>
+                    <div class="order-goods">${goodsHTML}</div>
+                  </li>
+                  `;
+		      }
+		    });
+
+		    oOrder.onclick = function(event) {
+		      event = event || window.event;
+		      var target = event.target || event.srcElement;
+		      if (target.className === 'cancel-order') {
+		        if (!confirm('确认要取消订单吗?')) {
+		          return;
+		        }
+		        var order_id = target.dataset.id;
+		        myajax.post('http://h6.duchengjiu.top/shop/api_order.php?token='+localStorage.token+'&status=cancel', {order_id}, function(err, responseText) {
+		          var json = JSON.parse(responseText);
+		          if (json.code === 0) {
+		            alert('订单取消成功');
+		          }
+		        });
+		      }
+		    }
+  		</script>
 		<footer id="box3">
 			<p class="fonts">
 				Copyright 2007 - 2016 vancl.com All Rights Reserved 京ICP证100557号 京公网安备11010102000579号 出版物经营许可证新出发京批字第直110138号
