@@ -136,9 +136,13 @@
         console.log('添加到购物车');
         myajax.post('http://h6.duchengjiu.top/shop/api_cart.php?token='+ localStorage.token,{goods_id, number:1},function(err, responseText) {
           var json = JSON.parse(responseText);
-          console.log(json);
           if (json.code === 0) {
-            alert('添加到购物车成功');
+            if (localStorage.username) {
+            	 alert('添加到购物车成功');
+            }else {
+            	location.href = 'login.html';
+            }
+           
           }
         })
       }
