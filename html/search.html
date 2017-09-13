@@ -15,9 +15,30 @@
 				<div class="headerTop">
 					<div class="headerTopword">
 						您好，欢迎光临凡客超品！
-						<a href="login.html">&nbsp;登录</a>
-						&nbsp;|&nbsp;
-						<a href="register.html">注册</a>
+						<a href="main.html" name="main" class="main">首页</a>
+						<a href="login.html"class="login">&nbsp;登录&nbsp;|&nbsp;</a>
+						<a href="register.html"class="register">注册</a>
+						<a href="order.html"class="order">我的订单&nbsp;|&nbsp;</a>
+					    <a href="#" name="username" class="username">asdfghjkl1</a>
+    <!-- 可以在a链接里面写javascript代码，在href属性中以javascript:开头，后面写js代码 -->
+					    <a href="javascript:localStorage.clear(); location.reload();" class="logout">退出</a>
+						<script>
+					      //判断用户名如果存在, 则显示用户名并显示退出按钮, 否则显示注册和登录
+					      if (localStorage.username) {
+					        var oUsername = document.querySelector('a[name=username]');
+					        var oLogout = document.querySelector('.logout');
+					        var oOrder = document.querySelector('.order');
+					        oUsername.innerText = localStorage.username;
+					        oUsername.style.display = 'inline';
+					        oOrder.style.display = 'inline';
+					        oLogout.style.display = 'inline';
+					      } else {
+					        var oRegister = document.querySelector('.register');
+					        var oLogin = document.querySelector('.login');
+					        oRegister.style.display = 'inline';
+					        oLogin.style.display = 'inline';
+					      }
+					    </script>
 					</div>
 				</div>
 			</div>
@@ -25,13 +46,26 @@
 				<div class="vanclLogoSearch">
 					<div class="searchTab">
 						<div class="search-fl">
-							<input type="text" placeholder="请输入关键字" class="Enter"/>
+							<input type="text" placeholder="请输入关键字" class="Enter"id='search'/>
 							<input type="button" class="btn"  />
 						</div>
+						<script>
+					      var oSearch = document.querySelector("#search");
+					      var oBtn = document.querySelector(".btn");
+					      oSearch.onkeyup = function(event) {
+					        if (oSearch.value!=''&&event.keyCode === 13) {
+					          location.href = 'search.html?search_text='+this.value;
+					        }
+					      }
+					      oBtn.onclick = function() {
+					      	if(oSearch.value!='')
+					      	location.href = 'search.html?search_text='+oSearch.value;
+					      }
+					    </script>
 						<div class="active">
 							<p>
 								<a  href="cart.html" class="cartTab">
-									购物车(<span>0</span>)
+									购物车
 								</a>
 							</p>
 						</div>
@@ -39,14 +73,14 @@
 					<div class="hotWord">
 						<p>
 							热门搜索：
-							<a href="#">T恤</a>
-							<a href="#">免烫衬衫</a>
-							<a href="#">C9</a>
-							<a href="#">熊本熊</a>
-							<a href="#">POLO</a>
-							<a href="#">牛津纺</a>
-							<a href="#">针织纺</a>
-							<a href="#">袜品</a>
+							<a href="search.html?search_text=T恤">T恤</a>
+							<a href="search.html?search_text=免烫衬衫">免烫衬衫</a>
+							<a href="search.html?search_text=C9">C9</a>
+							<a href="search.html?search_text=熊本熊">熊本熊</a>
+							<a href="search.html?search_text=POLO">POLO</a>
+							<a href="search.html?search_text=牛津纺">牛津纺</a>
+							<a href="search.html?search_text=针织纺">针织纺</a>
+							<a href="search.html?search_text=袜品">袜品</a>
 						</p>
 					</div>	
 				</div>
@@ -64,16 +98,21 @@
 			var oGoods = document.querySelector('#goods');
 			myajax.get("http://h6.duchengjiu.top/shop/api_goods.php",{search_text},function(error,responseText){
 				var json = JSON.parse(responseText);
-				console.log(json);
 				var data = json.data;
-				for (var i=0 ;i<data.length;i++) {
+				if (data != '') {
+					for (var i=0 ;i<data.length;i++) {
 					var obj = data[i];
-					oGoods.innerHTML += `<li id="list2">
-					<div><img src='${obj.goods_thumb}'></div>
+					oGoods.innerHTML += `<li id="list2"><a href="goods.html?goods_id=${obj.goods_id}">
+					<div><img src="${obj.goods_thumb}" /></div>
 					<div>${obj.goods_name}</div>
-					<div id="price">￥ ${obj.price}</div>
+					<div id='price'>￥ ${obj.price}</div></a>
 					</li>`;
+					}
+				}else {
+					alert('没有搜索项');
+					location.href = 'main.html';
 				}
+				
 			})
 		</script>
 

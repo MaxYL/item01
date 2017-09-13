@@ -16,6 +16,7 @@
 				<div class="headerTop">
 					<div class="headerTopword">
 						您好，欢迎光临凡客超品！
+						<a href="main.html" name="main" class="main">首页</a>
 						<a href="login.html"class="login">&nbsp;登录&nbsp;|&nbsp;</a>
 						
 						<a href="register.html"class="register">注册&nbsp;|&nbsp;</a>
@@ -135,7 +136,7 @@
 				<th>操作</th>
 			</tr>
 		  </table>
-		 <div class="sum">小计：<span id="sum">0</span> <input type="button" id="clear-cart" value="清空购物车"> <a href="order.html">结算</a></div>
+		 <div class="sum">小计：<span id="sum">0</span> <input type="button" id="clear-cart" value="清空购物车"> <a href="address.html">结算</a></div>
 		</div>
 		<script type="text/javascript">
 			var oTable = document.querySelector("table");
@@ -160,38 +161,38 @@
 				}
 				getSum();
 			})
-	  oTable.onchange = function(event) {
-      event = event || window.event;
-      var target = event.target || event.srcElement;
-      if (target.name === 'number') {
-        //如果输入的内容不是数字，我们默认改成1
-        if (isNaN(parseInt(target.value))) {
-          target.value = 1;
-        }
-        //得到商品的ID
-        var goods_id = target.dataset.id;
-        //得到商品的数量
-        var number = target.value;
-        //请求api修改购买的商品数量
-        myajax.post('http://h6.duchengjiu.top/shop/api_cart.php?token='+localStorage.token,
-        {goods_id, number},
-        function(err, responseText) {
-          var json = JSON.parse(responseText);
-          console.log(json);
-          if (json.code === 0) {
-            // alert('更新购物车成功');
-            //修改总价和小计
-            //得到当前商品的价格
-            var goods_price = parseInt(target.parentNode.nextElementSibling.innerText);
-            //修改单个商品的总价：数量 * 价格
-            target.parentNode.nextElementSibling.nextElementSibling.innerText = parseInt(target.value) * goods_price;
-            //显示总价
-            getSum();
-          }
-        })
-      }
-    }
-    oTable.addEventListener('click', function(event){
+		  oTable.onchange = function(event) {
+	      event = event || window.event;
+	      var target = event.target || event.srcElement;
+	      if (target.name === 'number') {
+	        //如果输入的内容不是数字，我们默认改成1
+	        if (isNaN(parseInt(target.value))) {
+	          target.value = 1;
+	        }
+	        //得到商品的ID
+	        var goods_id = target.dataset.id;
+	        //得到商品的数量
+	        var number = target.value;
+	        //请求api修改购买的商品数量
+	        myajax.post('http://h6.duchengjiu.top/shop/api_cart.php?token='+localStorage.token,
+	        {goods_id, number},
+	        function(err, responseText) {
+	          var json = JSON.parse(responseText);
+	          console.log(json);
+	          if (json.code === 0) {
+	            // alert('更新购物车成功');
+	            //修改总价和小计
+	            //得到当前商品的价格
+	            var goods_price = parseInt(target.parentNode.nextElementSibling.innerText);
+	            //修改单个商品的总价：数量 * 价格
+	            target.parentNode.nextElementSibling.nextElementSibling.innerText = parseInt(target.value) * goods_price;
+	            //显示总价
+	            getSum();
+	          }
+	        })
+	      }
+	    }
+   	 oTable.addEventListener('click', function(event){
       event = event || window.event;
       var target = event.target || event.srcElement;
       if (target.name === 'delete') {

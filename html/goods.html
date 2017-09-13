@@ -6,50 +6,84 @@
 		<link rel="stylesheet" type="text/css" href="../css/index.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/header.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/section.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/footer.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/section.css"/>
 		<script src="../js/myajax.js"></script>
 		<style>
 			#thing{
 				width: 1200px;
-				height: 500px;
 				margin: auto;
 			}
-			#pic-1{
-				position: relative;
-				float: left;
-				width: 500px;
-				height: 500px;
+			.product {
+			  position: relative;
 			}
-			
-			
-			#prudont-n{
+			.smallPic {
+			  float: left;
+			  position: relative;
+			  width: 500px;
+			  height: 500px;
+			}
+			.smallPic img{
+			  width: 100%;
+			  height: 100%;
+			}
+			.smallPic .zoom {
+			  position: absolute;
+			  width: 175px;
+			  height: 175px;
+			  top: 100px;
+			  left: 100px;
+			  background-color: #FEDE4F;
+			  opacity: 0.5;
+			  filter: alpha(opacity=50);
+			  border: 1px solid #aaa;
+			  display: none;
+			}
+			#bigPic {
+			  width: 500px;
+			  height: 500px;
+			  position: absolute;
+			  top: 0px;
+			  left: 520px;
+			  border: 1px solid black;
+			  display: none;
+			  z-index: 100;
+			}
+			#goods_wz{
 				float: left;
+				margin: 20px 0 0 30px;	
+			}			
+			#prudont-n{
 				width: 500px;
 				height: 25px;
-				font-size: 24px;
+				text-align: left;
+				line-break: 10px;
+				font-size: 18px;
 			}
 			#prudont-desc{
-				float: left;
-				margin-top: 20px;
+				margin-top: 80px;
 				width: 500px;
 				height: 100px;
-				font-size: 20px;
+				font-size: 16px;
 			}
 			#prudont-pre{
-				float: left;
+				margin-top: 100px;
 				width: 500px;
 				height: 30px;
 				color: red;
 				font-size: 24px;
 			}
 			#add-to-cart{
-				float: left;
-				margin-top: 100px;
-				margin-right: 300px;
 				width: 168px;
 				height: 33px;
+				cursor: pointer;
+				margin-top: 100px;
 				background: url(../img/vanclsprite.png) no-repeat -147px -285px;
+			}
+			#Shop_Now{
+				width: 166px;
+				height: 31px;
+				cursor: pointer;
 			}
 		</style>
 	</head>
@@ -113,19 +147,31 @@
 			</div>
 		</header>
 		<section id="box2">
-			<div id="thing">	
+				<div id="thing">
+				<script src="../js/zoom.js"></script>
 			<script>
 			var oThing = document.querySelector("#thing");
 			var goods_id = getQueryString("goods_id");
 			myajax.get("http://h6.duchengjiu.top/shop/api_goods.php",{goods_id},function(err, responseText){
 				var json = JSON.parse(responseText);
 				var obj = json.data[0];
-				oThing.innerHTML = `<div>
-				<div id="pic-1"><img src="${obj.goods_thumb}" /></div>
-				<div id="prudont-n">${obj.goods_name}</div>
-				<div id="prudont-desc">${obj.goods_desc}</div>
-				<div id="prudont-pre">￥ ${obj.price}</div>
-				<div><input type="button" id="add-to-cart"/></div></div>`;
+				oThing.innerHTML = `
+				<div id="product" class="product">
+			   	 <div id="smallPic" class="smallPic">
+			   		 <img src="${obj.goods_thumb}" alt="">
+			    	 <div id="zoom" class="zoom"></div>
+			     </div>
+			     <div id="bigPic" class="bigPic"style='background-size:300% 300%'>
+			     </div>
+			     <div id="goods_wz">
+					<div id="prudont-n">${obj.goods_name}</div>
+					<div id="prudont-desc">${obj.goods_desc}</div>
+					<div id="prudont-pre">￥ ${obj.price}</div>
+					<div id="buy"><input type="button" id="Shop_Now" value="立即购买"/> <input type="button" id="add-to-cart"/>
+				 </div>
+				</div>`;
+				
+				zoom(obj.goods_thumb);
 			});
 			
 			//添加购物车
@@ -133,7 +179,14 @@
       event = event || window.event;
       var target = event.target || event.srcElement;
       if (target.id === 'add-to-cart') {
-        console.log('添加到购物车');
+        if (!localStorage.token) {
+          alert('请先登录再购买');
+          //把当前商品的详细地址存储到localStorage.backurl
+          localStorage.backurl = location.href
+          //跳转到登录页
+          location.href = "login.html";
+          return;
+        }
         myajax.post('http://h6.duchengjiu.top/shop/api_cart.php?token='+ localStorage.token,{goods_id, number:1},function(err, responseText) {
           var json = JSON.parse(responseText);
           if (json.code === 0) {

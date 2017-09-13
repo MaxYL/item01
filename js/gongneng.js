@@ -86,3 +86,40 @@ var oCat = document.getElementById("cat");
       }
       oCirclesLi[n].className = "current";
     }
+    function BackToTop() {
+		this.dom = null;
+		this.init();
+		this.bindEvent();
+	}
+	BackToTop.prototype.init = function() {
+		this.dom = document.querySelector('#backtotop');
+	}
+	BackToTop.prototype.bindEvent = function() {
+		 this.dom.onclick = function() {
+		  scrollAnimate(0, 1000);
+		}
+
+		function scrollAnimate(target, timer) {
+		  var interval = 20;
+		  var frame = 0;
+		  var frames = timer / interval;
+		  var start = document.body.scrollTop || document.documentElement.scrollTop;
+		  var distance = target - start;
+		  var timer;
+		  clearInterval(timer);
+		  timer = setInterval(function(){
+			frame++;
+			if (frame >= frames) {
+			  clearInterval(timer);
+			}
+			
+			document.body.scrollTop = document.documentElement.scrollTop = CubicEaseInOut(frame, start, distance, frames);
+		  }, interval);
+
+		  function CubicEaseInOut(t,b,c,d){
+				if ((t/=d/2) < 1) return c/2*t*t*t + b;
+				return c/2*((t-=2)*t*t + 2) + b;
+			}
+		}
+	}
+    var backtotop = new BackToTop();

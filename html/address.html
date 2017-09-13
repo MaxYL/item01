@@ -16,9 +16,28 @@
 				<div class="headerTop">
 					<div class="headerTopword">
 						您好，欢迎光临凡客超品！
-						<a href="login.html">&nbsp;登录</a>
-						&nbsp;|&nbsp;
-						<a href="register.html">注册</a>
+						<a href="main.html" name="main" class="main">首页</a>
+						<a href="login.html"class="login">&nbsp;登录&nbsp;|&nbsp;</a>	
+						<a href="register.html"class="register">注册</a>
+						<a href="order.html"class="order">我的订单&nbsp;|&nbsp;</a>
+					    <a href="#" name="username" class="username">asdfghjkl1</a>
+					    <a href="javascript:localStorage.clear(); location.reload();" class="logout">退出</a>
+						<script>
+					      if (localStorage.username) {
+					        var oUsername = document.querySelector('a[name=username]');
+					        var oLogout = document.querySelector('.logout');
+					        var oOrder = document.querySelector('.order');
+					        oUsername.innerText = localStorage.username;
+					        oUsername.style.display = 'inline';
+					        oOrder.style.display = 'inline';
+					        oLogout.style.display = 'inline';
+					      } else {
+					        var oRegister = document.querySelector('.register');
+					        var oLogin = document.querySelector('.login');
+					        oRegister.style.display = 'inline';
+					        oLogin.style.display = 'inline';
+					      }
+					    </script>
 					</div>
 				</div>
 			</div>
@@ -26,13 +45,26 @@
 				<div class="vanclLogoSearch">
 					<div class="searchTab">
 						<div class="search-fl">
-							<input type="text" placeholder="请输入关键字" class="Enter"/>
+							<input type="text" placeholder="请输入关键字" class="Enter"id='search'/>
 							<input type="button" class="btn"  />
 						</div>
+						<script>
+					      var oSearch = document.querySelector("#search");
+					      var oBtn = document.querySelector(".btn");
+					      oSearch.onkeyup = function(event) {
+					        if (oSearch.value!=''&&event.keyCode === 13) {
+					          location.href = 'search.html?search_text='+this.value;
+					        }
+					      }
+					      oBtn.onclick = function() {
+					      	if(oSearch.value!='')
+					      	location.href = 'search.html?search_text='+oSearch.value;
+					      }
+					    </script>
 						<div class="active">
 							<p>
 								<a  href="cart.html" class="cartTab">
-									购物车(<span>0</span>)
+									购物车
 								</a>
 							</p>
 						</div>
@@ -40,14 +72,14 @@
 					<div class="hotWord">
 						<p>
 							热门搜索：
-							<a href="#">T恤</a>
-							<a href="#">免烫衬衫</a>
-							<a href="#">C9</a>
-							<a href="#">熊本熊</a>
-							<a href="#">POLO</a>
-							<a href="#">牛津纺</a>
-							<a href="#">针织纺</a>
-							<a href="#">袜品</a>
+							<a href="search.html?search_text=T恤">T恤</a>
+							<a href="search.html?search_text=免烫衬衫">免烫衬衫</a>
+							<a href="search.html?search_text=C9">C9</a>
+							<a href="search.html?search_text=熊本熊">熊本熊</a>
+							<a href="search.html?search_text=POLO">POLO</a>
+							<a href="search.html?search_text=牛津纺">牛津纺</a>
+							<a href="search.html?search_text=针织纺">针织纺</a>
+							<a href="search.html?search_text=袜品">袜品</a>
 						</p>
 					</div>	
 				</div>
@@ -59,12 +91,14 @@
 		 <section id="box2">
 		 	<div id="address">
 		 		<p id="address-size"> 收货地址:</p>
-		    	<input type="button" id="add-address" value="添加收货地址" />
+		    	
 		    	<div class="address">
 		     	 <div>
 		        <ul class="address-ul">
+		       
 		        </ul>
-		      </div>
+		         <input type="button" id="add-address" value="添加收货地址" />
+		    </div>
 		      <div class="show-all-address">显示全部地址</div>
 		      <script src="../js/myajax.js" type="text/javascript" charset="utf-8"></script>
 		      <script src="../js/animate.js" type="text/javascript" charset="utf-8"></script>
@@ -80,7 +114,6 @@
 		      </script>
 		    </div>
 		    <script>
-		      //ajax读取到收货地址并显示
 		      function showAddress() {
 		        myajax.get('http://h6.duchengjiu.top/shop/api_useraddress.php',
 		        {token: localStorage.token},
@@ -89,14 +122,13 @@
 		          var data = json.data;
 		          var oAddressUl = document.querySelector('.address-ul');
 		          if (data.length === 0) {
-		            oAddressUl.innerHTML = '<h2>您还没有收货地址，请点击添加收货地址</h2>';
 		            return;
 		          }
 		          oAddressUl.innerHTML = '';
 		          for (var i = data.length - 1; i >= 0; i--) {
 		            var obj = data[i];
 		            oAddressUl.innerHTML += `
-                        <li data-id="${obj.address_id}">
+                        <li data-id="${obj.address_id}"class ='address'>
                           <span>收货人：${obj.consignee}</span><span name="delete" class="delete" data-id="${obj.address_id}">删除</span><br />
                           <span>手机：${obj.mobile}</span><br />
                           <span>地址：${obj.address}</span>

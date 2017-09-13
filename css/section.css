@@ -6,7 +6,7 @@
 	margin: auto;
 	margin-top: 40px;
 	width: 1200px;
-	height: 1000px;
+	height: 700px;
 }
 
 #list2 {
@@ -200,7 +200,9 @@ label {
 	margin: auto;
 	width: 1200px;
 }
-
+.address-ul{
+	float: left;
+}
 #address-size {
 	width: 1200px;
 	border-bottom: 1px solid black;
@@ -209,9 +211,9 @@ label {
 }
 
 #add-address {
-	margin-top: 10px;
-	float: right;
-	width: 200px;
-	height: 200px;
-	margin-right: 750px;
+	margin-top: 50px;
+	float: left;
+	width:100px;
+	height: 100px;
+	
 }
