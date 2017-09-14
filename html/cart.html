@@ -153,8 +153,8 @@
                             <td><img src="${obj.goods_thumb}" ></td>
                             <td>${obj.goods_name}</td>
                             <td><input data-id="${obj.goods_id}" type="number" name="number" min="1" max="10" value="${obj.goods_number}" /></td>
-                            <td>￥${obj.goods_price}</td>
-                            <td name="sum">￥${obj.goods_sum}</td>
+                            <td>${obj.goods_price}</td>
+                            <td name="sum">${obj.goods_sum}</td>
                             <td><input data-id="${obj.goods_id}" type="button" name="delete" value="删除"></td>
                           </tr>
                           `;
@@ -165,28 +165,19 @@
 	      event = event || window.event;
 	      var target = event.target || event.srcElement;
 	      if (target.name === 'number') {
-	        //如果输入的内容不是数字，我们默认改成1
 	        if (isNaN(parseInt(target.value))) {
 	          target.value = 1;
 	        }
-	        //得到商品的ID
 	        var goods_id = target.dataset.id;
-	        //得到商品的数量
 	        var number = target.value;
-	        //请求api修改购买的商品数量
 	        myajax.post('http://h6.duchengjiu.top/shop/api_cart.php?token='+localStorage.token,
 	        {goods_id, number},
 	        function(err, responseText) {
 	          var json = JSON.parse(responseText);
 	          console.log(json);
 	          if (json.code === 0) {
-	            // alert('更新购物车成功');
-	            //修改总价和小计
-	            //得到当前商品的价格
 	            var goods_price = parseInt(target.parentNode.nextElementSibling.innerText);
-	            //修改单个商品的总价：数量 * 价格
 	            target.parentNode.nextElementSibling.nextElementSibling.innerText = parseInt(target.value) * goods_price;
-	            //显示总价
 	            getSum();
 	          }
 	        })
@@ -196,10 +187,9 @@
       event = event || window.event;
       var target = event.target || event.srcElement;
       if (target.name === 'delete') {
-        if (!confirm('确认要删除吗')) { //当你选择的是取消则不执行任何事情
+        if (!confirm('确认要删除吗')) { 
           return;
         }
-        //得到商品ID
         var goods_id = target.dataset.id;
         var number = 0;
         myajax.post('http://h6.duchengjiu.top/shop/api_cart.php?token='+localStorage.token,
@@ -208,11 +198,8 @@
           var json = JSON.parse(responseText);
           console.log(json);
           if (json.code === 0) {
-            // alert('更新购物车成功');
-            //删除整个TR
             var tr = target.parentNode.parentNode;
             tr.parentNode.removeChild(tr);
-            //显示总价
             getSum();
           }
         })
@@ -224,7 +211,6 @@
       if (!confirm('确认要清空整个购物车吗？')) {
         return;
       }
-      //得到所有的商品ID
       var oGoodsIds = document.querySelectorAll('td[name=goods_id]');
       for (var i = 0; i < oGoodsIds.length; i++) {
         var td = oGoodsIds[i];
@@ -237,11 +223,8 @@
             var json = JSON.parse(responseText);
             console.log(json);
             if (json.code === 0) {
-              // alert('更新购物车成功');
-              //删除整个TR
               var tr = td.parentNode;
               tr.parentNode.removeChild(tr);
-              //显示总价
               getSum();
             }
           });
@@ -252,10 +235,10 @@
       var oSums = document.querySelectorAll('td[name=sum]');
       var sum = 0;
       for (var i = 0; i < oSums.length; i++) {
-        sum += parseInt(oSums[i].innerText.substr(1));
+        sum += parseInt(oSums[i].innerText);
       }
       localStorage.sum = sum;
-      oSum.innerText = "￥" + sum;
+      oSum.innerText =  sum;
     }
   </script>
 		<section></section>
